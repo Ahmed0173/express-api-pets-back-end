@@ -5,16 +5,25 @@ const app = express();
 const mongoose = require('mongoose');
 const logger = require('morgan');
 
+const petsRouter = require('./controllers/pets');
+
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+// Middleware
 app.use(express.json());
 app.use(logger('dev'));
 
 // Routes go here
+
+app.get('/', (req, res) => {
+  res.send('Welcome to the Pets API!');
+});
+
+app.use('/pets', petsRouter);
 
 app.listen(3000, () => {
   console.log('The express app is ready!');
