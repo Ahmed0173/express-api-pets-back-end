@@ -4,9 +4,13 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const logger = require('morgan');
+const cors = require('cors');
 
 const petsRouter = require('./controllers/pets');
 
+app.use(cors());
+
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', () => {
